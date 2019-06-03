@@ -1,6 +1,11 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "prepare": "lerna bootstrap && lerna run build",
+    "demo": "(cd packages/demo && npm start)",
+    "start": "npm run prepare && npm run demo"
+  },
   "devDependencies": {
     "@stencil/core": "1.0.0-beta.8",
     "lerna": "^3.14.1"

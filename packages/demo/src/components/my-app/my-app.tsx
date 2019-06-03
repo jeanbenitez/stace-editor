@@ -1,7 +1,9 @@
-import 'stace-editor';
+import 'brace';
 import 'brace/theme/eclipse';
 import 'brace/mode/sql';
 import { Component, h, ComponentInterface } from '@stencil/core';
+
+import 'stace-editor';
 
 @Component({
   tag: 'my-app',
