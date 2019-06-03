@@ -1,34 +1,71 @@
-import { Component, Prop, h, Event, EventEmitter, ComponentInterface, Watch } from '@stencil/core';
-import { createRef } from '../../utils/createRef';
 import 'brace';
+
 import 'brace/theme/monokai';
-import 'brace/mode/html';
-import { Editor, edit } from 'brace';
+import 'brace/mode/javascript';
+
+import { Editor } from 'brace';
+
+import { Component, Prop, Element, Event, EventEmitter, ComponentInterface, Watch, Method } from '@stencil/core';
+
+declare var ace;
 
 @Component({
   tag: 'stace-editor',
-  shadow: true
+  styleUrl: 'stace-editor.css',
+  shadow: false
 })
 export class StaceEditor implements ComponentInterface {
-  @Prop() style: any = {};
+  _editor: Editor;
+  oldText: string;
+
+  @Element() elm: HTMLElement;
 
   @Event() textChange: EventEmitter;
 
-  _options: any = {};
-  _readOnly: boolean = false;
-  _theme: string = "monokai";
-  _mode: any = "html";
-  _text: string = "";
-  _editor: Editor;
-  _durationBeforeCallback: number = 0;
-  _autoUpdateContent: boolean = true;
-  timeoutSaving: any;
+  @Prop() autoUpdateContent: boolean = true;
+  @Prop() durationBeforeCallback: number = 0;
+  @Prop() timeoutSaving: number = 0;
 
-  oldText: any;
-  elm = createRef();
+  @Prop() options: any = {};
 
-  constructor() {
-    this.makeEditor();
+  @Watch('options')
+  setOptions(options: any) {
+    this._editor.setOptions(options || {});
+  }
+
+  @Prop() readOnly: boolean = false;
+
+  @Watch('readOnly')
+  setReadOnly(readOnly: boolean) {
+    this._editor.setReadOnly(readOnly);
+  }
+
+  @Prop() theme: string = "monokai";
+
+  @Watch('theme')
+  setTheme(theme: string) {
+    this._editor.setTheme(`ace/theme/${theme}`);
+  }
+
+  @Prop() mode: string = "javascript";
+
+  @Watch('mode')
+  setMode(mode: string) {
+    this._editor.getSession().setMode(`ace/mode/${mode}`);
+  }
+
+  @Prop() text: string = "";
+
+  @Watch('text')
+  watchText(text: string) {
+    if (text === null || text === undefined) {
+      text = "";
+    }
+    if (this.text !== text && this.autoUpdateContent === true) {
+      this.text = text;
+      this._editor.setValue(text);
+      this._editor.clearSelection();
+    }
   }
 
   componentDidLoad() {
@@ -36,18 +73,23 @@ export class StaceEditor implements ComponentInterface {
     this.initEvents();
   }
 
-  makeEditor() {
-    if (!this.elm.current || this._editor) return;
-    this._editor = edit(this.elm.current);
-    this._editor.$blockScrolling = Infinity;
+  @Method()
+  async getEditor() {
+    return this._editor;
   }
 
   init() {
-    this.makeEditor();
-    this.setOptions(this._options || {});
-    this.setTheme(this._theme);
-    this.setMode(this._mode);
-    this.setReadOnly(this._readOnly);
+    if (this.elm && !this._editor) {
+      this._editor = ace.edit(this.elm);
+      this._editor.$blockScrolling = Infinity;
+    }
+
+    if (this._editor) {
+      this.setOptions(this.options || {});
+      this.setTheme(this.theme);
+      this.setMode(this.mode);
+      this.setReadOnly(this.readOnly);
+    }
   }
 
   initEvents() {
@@ -60,8 +102,8 @@ export class StaceEditor implements ComponentInterface {
     if (newVal === this.oldText) {
       return;
     }
-    if (!this._durationBeforeCallback) {
-      this._text = newVal;
+    if (!this.durationBeforeCallback) {
+      this.text = newVal;
       this.textChange.emit(newVal);
     } else {
       if (this.timeoutSaving) {
@@ -69,99 +111,11 @@ export class StaceEditor implements ComponentInterface {
       }
 
       this.timeoutSaving = setTimeout(() => {
-        this._text = newVal;
+        this.text = newVal;
         this.textChange.emit(newVal);
         this.timeoutSaving = null;
-      }, this._durationBeforeCallback);
+      }, this.durationBeforeCallback);
     }
     this.oldText = newVal;
-  }
-
-  @Watch('options')
-  watchOptions(options: any) {
-    this.setOptions(options);
-  }
-
-  setOptions(options: any) {
-      this._options = options;
-      this._editor.setOptions(options || {});
-  }
-
-  @Watch('readOnly')
-  watchReadOnly(readOnly: any) {
-      this.setReadOnly(readOnly);
-  }
-
-  setReadOnly(readOnly: any) {
-      this._readOnly = readOnly;
-      this._editor.setReadOnly(readOnly);
-  }
-
-  @Watch('theme')
-  watchTheme(theme: string) {
-      this.setTheme(theme);
-  }
-
-  setTheme(theme: string) {
-      this._theme = theme;
-      this._editor.setTheme(`ace/theme/${theme}`);
-  }
-
-  @Watch('mode')
-  watchMode(mode: string) {
-      this.setMode(mode);
-  }
-
-  setMode(mode: any) {
-      this._mode = mode;
-      if (typeof this._mode === 'object') {
-          this._editor.getSession().setMode(this._mode);
-      } else {
-          this._editor.getSession().setMode(`ace/mode/${this._mode}`);
-      }
-  }
-
-  @Watch('text')
-  watchText(text: string) {
-      this.setText(text);
-  }
-
-  setText(text: any) {
-      if (text === null || text === undefined) {
-          text = "";
-      }
-      if (this._text !== text && this._autoUpdateContent === true) {
-          this._text = text;
-          this._editor.setValue(text);
-          this._editor.clearSelection();
-      }
-  }
-
-  @Watch('autoUpdateContent')
-  watchAutoUpdateContent(status: boolean) {
-    this.setAutoUpdateContent(status);
-  }
-
-  setAutoUpdateContent(status: boolean) {
-    this._autoUpdateContent = status;
-  }
-
-  @Watch('durationBeforeCallback')
-  watchdurationBeforeCallback(num: number) {
-      this.setDurationBeforeCallback(num);
-  }
-
-  setDurationBeforeCallback(num: number) {
-      this._durationBeforeCallback = num;
-  }
-
-  getEditor() {
-    return this._editor;
-  }
-
-  render() {
-    return (
-      <div ref={this.elm}></div>
-    );
   }
 }
