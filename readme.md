@@ -7,10 +7,6 @@
 <h1 align="center">Stace Editor</h1>
 <p align="center">A web component wrapper for Ace Editor, using <a href="https://stenciljs.com">Stencil</a> + <a href="https://github.com/thlorenz/brace">brace</a></p>
 
-<br/>
-<br/>
-<br/>
-
 ## Why?
 
 I needed to make an Ace editor web component to a stencil-based app, so I did this ... and wait, why not? I love <a href="https://stenciljs.com">Stencil</a>.
