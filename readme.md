@@ -17,6 +17,13 @@ I needed to make an Ace editor web component to a stencil-based app, so I did th
 
 I had some limitations with Ace, ex. I didn't found the way to load the ace editor addons (theme/mode/snippets) dynamically, so, yes, you will need to have brace as your dependency too, and load the addons that you will use. Feel free to do a PR with some solution to this :D
 
+## Run Demo
+
+```sh
+npm install
+npm start
+```
+
 ## Usage
 
 Learn how to install this web component in your technology <a href="https://stenciljs.com/docs/overview">here</a>. Check the demo package too.
@@ -40,7 +47,7 @@ import 'brace/theme/monokai';
   durationBeforeCallback={1000}
   onTextChange={this.doChange}
   style={{width: '500px', height: '500px'}}
-/></stace-editor>
+/>
 ```
 
 For more detailed documentation with all the supported config options see the Ace documentation.
