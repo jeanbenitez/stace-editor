@@ -1,8 +1,5 @@
 import 'brace';
 
-import 'brace/theme/monokai';
-import 'brace/mode/javascript';
-
 import { Editor } from 'brace';
 
 import { Component, Prop, Element, Event, EventEmitter, ComponentInterface, Watch, Method } from '@stencil/core';
@@ -40,17 +37,23 @@ export class StaceEditor implements ComponentInterface {
     this._editor.setReadOnly(readOnly);
   }
 
-  @Prop() theme: string = "monokai";
+  @Prop({ reflect: true }) theme: string = "monokai";
 
   @Watch('theme')
-  setTheme(theme: string) {
+  async setTheme(theme: string, dynamicImport = true) {
+    if (dynamicImport) {
+      await import(`https://unpkg.com/brace/theme/${theme}.js`);
+    }
     this._editor.setTheme(`ace/theme/${theme}`);
   }
 
-  @Prop() mode: string = "javascript";
+  @Prop({ reflect: true }) mode: string = "javascript";
 
   @Watch('mode')
-  setMode(mode: string) {
+  async setMode(mode: string, dynamicImport = true) {
+    if (dynamicImport) {
+      await import(`https://unpkg.com/brace/mode/${mode}.js`);
+    }
     this._editor.getSession().setMode(`ace/mode/${mode}`);
   }
 
