@@ -1,6 +1,6 @@
 {
   "name": "stace-editor-demo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Stace Editor Demo",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -22,6 +22,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "stace-editor": "^0.0.1"
+    "stace-editor": "^0.0.2"
   }
 }
