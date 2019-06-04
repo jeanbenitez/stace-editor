@@ -1,6 +1,6 @@
 {
   "name": "stace-editor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A web component wrapper for Ace Editor, using StencilJS (and brace).",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -20,9 +20,5 @@
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
-  "devDependencies": {
-  },
-  "license": "MIT",
-  "dependencies": {
-  }
+  "license": "MIT"
 }
