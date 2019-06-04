@@ -20,8 +20,6 @@
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
-  "devDependencies": {
-  },
   "license": "MIT",
   "dependencies": {
     "stace-editor": "^0.0.1"
