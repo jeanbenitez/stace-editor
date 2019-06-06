@@ -15,7 +15,7 @@
 | `options`                | `options`                  |             | `any`     | `{}`           |
 | `readOnly`               | `read-only`                |             | `boolean` | `false`        |
 | `text`                   | `text`                     |             | `string`  | `""`           |
-| `theme`                  | `theme`                    |             | `string`  | `"monokai"`    |
+| `theme`                  | `theme`                    |             | `string`  | `"ambiance"`   |
 | `timeoutSaving`          | `timeout-saving`           |             | `number`  | `0`            |
 
 
@@ -38,6 +38,19 @@ Type: `Promise<Editor>`
 
 
 
+
+## Dependencies
+
+### Used by
+
+ - [stace-editor-demo](../stace-editor-demo)
+
+### Graph
+```mermaid
+graph TD;
+  stace-editor-demo --> stace-editor
+  style stace-editor fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 

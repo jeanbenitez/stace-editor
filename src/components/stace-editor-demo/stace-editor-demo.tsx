@@ -1,12 +1,7 @@
-import 'brace';
-import 'brace/theme/eclipse';
-import 'brace/mode/sql';
 import { Component, h, ComponentInterface } from '@stencil/core';
 
-import 'stace-editor';
-
 @Component({
-  tag: 'my-app',
+  tag: 'stace-editor-demo',
   shadow: false
 })
 export class MyApp implements ComponentInterface {
@@ -18,8 +13,8 @@ export class MyApp implements ComponentInterface {
         <h1>Stace Editor</h1>
         <stace-editor
           text={this.code}
-          mode="sql" //string or object (thx ckiffel)
-          theme="eclipse"
+          mode="javascript" //string or object (thx ckiffel)
+          theme="monokai"
           // options="options"
           readOnly={false}
           autoUpdateContent={true} //change content when text change

@@ -1,7 +1,10 @@
 import { Config } from '@stencil/core';
 
 export const config: Config = {
-  namespace: 'demo',
+  namespace: 'stace-editor',
+  bundles: [
+     { components: ['stace-editor'] }
+  ],
   outputTargets: [
     {
       type: 'dist',
@@ -14,5 +17,6 @@ export const config: Config = {
       type: 'www',
       serviceWorker: null // disable service workers
     }
-  ]
+  ],
+  excludeSrc: ['/test/', '**/.spec.', '/components/stace-editor-demo/'],
 };

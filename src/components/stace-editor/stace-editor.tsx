@@ -37,7 +37,7 @@ export class StaceEditor implements ComponentInterface {
     this._editor.setReadOnly(readOnly);
   }
 
-  @Prop({ reflect: true }) theme: string = "monokai";
+  @Prop({ reflect: true }) theme: string = "ambiance";
 
   @Watch('theme')
   async setTheme(theme: string, dynamicImport = true) {

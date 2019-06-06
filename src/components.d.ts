@@ -23,6 +23,7 @@ export namespace Components {
     'theme': string;
     'timeoutSaving': number;
   }
+  interface StaceEditorDemo {}
 }
 
 declare global {
@@ -33,8 +34,15 @@ declare global {
     prototype: HTMLStaceEditorElement;
     new (): HTMLStaceEditorElement;
   };
+
+  interface HTMLStaceEditorDemoElement extends Components.StaceEditorDemo, HTMLStencilElement {}
+  var HTMLStaceEditorDemoElement: {
+    prototype: HTMLStaceEditorDemoElement;
+    new (): HTMLStaceEditorDemoElement;
+  };
   interface HTMLElementTagNameMap {
     'stace-editor': HTMLStaceEditorElement;
+    'stace-editor-demo': HTMLStaceEditorDemoElement;
   }
 }
 
@@ -50,9 +58,11 @@ declare namespace LocalJSX {
     'theme'?: string;
     'timeoutSaving'?: number;
   }
+  interface StaceEditorDemo extends JSXBase.HTMLAttributes<HTMLStaceEditorDemoElement> {}
 
   interface IntrinsicElements {
     'stace-editor': StaceEditor;
+    'stace-editor-demo': StaceEditorDemo;
   }
 }
 

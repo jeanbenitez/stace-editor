@@ -1,4 +1,4 @@
-# my-app
+# stace-editor-demo
 
 
 
@@ -9,13 +9,13 @@
 
 ### Depends on
 
-- stace-editor
+- [stace-editor](../stace-editor)
 
 ### Graph
 ```mermaid
 graph TD;
-  my-app --> stace-editor
-  style my-app fill:#f9f,stroke:#333,stroke-width:4px
+  stace-editor-demo --> stace-editor
+  style stace-editor-demo fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
